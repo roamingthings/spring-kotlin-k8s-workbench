@@ -1,0 +1,18 @@
+== Kuberspring
+
+A workbench project to tinker with Spring Boot 2, Kotlin, Gradle and Kubernetes.
+
+=== Use Minikube Docker
+
+When using Minikube you may want to use the docker installation that comes with Minikube. This way you don't need to
+deploy the image to a registry.
+
+Execute the following command in the shell before running `gradle buildImage`:
+
+----
+$ eval $(minikube docker-env)
+----
+
+=== Used Gradle-Plugins
+
+https://github.com/bmuschko/gradle-docker-plugin[GitHub: Gradle Docker plugin]

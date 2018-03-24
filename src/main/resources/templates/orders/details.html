@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Details</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<!--/*@thymesVar id="order" type="de.roamingthings.orderservice.model.Order"*/-->
+<h1 th:if="${order.id != null}">Details of Order <span th:text="${order.name}">An Order</span></h1>
+<h1 th:unless="${order.id != null}">Details of new Order</h1>
+<form action="#" th:action="@{/orders}" th:object="${order}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label for="order-name">Name:</label> <input id="order-name" type="text" th:field="*{name}"/>
+    <div><input type="submit" value="Submit"/> <a href="/orders" th:href="@{/orders}">Back without change</a></div>
+</form>
+</body>
+</html>

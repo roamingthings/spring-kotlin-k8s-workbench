@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>List of Orders from Order Service</h1>
+
+<!--/*@thymesVar id="orders" type="java.util.List<de.roamingthings.orderservice.model.Order>"*/-->
+<div th:unless="${orders.empty}">
+    <table>
+        <tr>
+            <th>Order Name</th>
+        </tr>
+        <!--/*@thymesVar id="order" type="de.roamingthings.orderservice.model.Order"*/-->
+        <tr th:each="order : ${orders}">
+            <td><a href="/orders/details.html" th:href="@{/orders/} + ${order.id}"><span th:text="${order.name}">Order Name</span></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:if="${orders.empty}">
+    No orders stored at the moment
+</div>
+
+<a href="/orders/new" th:href="@{/orders/new}">Create New Order</a>
+
+</body>
+</html>

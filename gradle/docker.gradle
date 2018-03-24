@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:3.2.5'
+    }
+}
+
+// use fully qualified class name
+apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+
+// import task classes
+import com.bmuschko.gradle.docker.tasks.image.*
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+task buildImage(type: DockerBuildImage) {
+    dependsOn build
+    inputDir = projectDir
+    tag = 'roamingthings/kuberspring:latest'
+    buildArgs(['JAR_FILE': "build/libs/${bootJar.archiveName}"])
+}

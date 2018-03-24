@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: order-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: order-db
+  template:
+    metadata:
+      labels:
+        run: order-db
+    spec:
+      volumes:
+        - name: order-db-storage
+          persistentVolumeClaim:
+            claimName: order-db-claim
+      containers:
+        - image: postgres
+          name: order-db-container
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+              name: orderdb
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: order-db-storage
+#          gcePersistentDisk:
+#            pdName: order-db-volume
+#            fsType: ext4
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: order-db-secret
+                  key: password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: order-db-secret
+type: Opaque
+data:
+  password: bXl2ZXJ5c2VjcmV0cGFzc3dvcmQ=
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderdb
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+  selector:
+    run: order-db
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderdbext
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+      protocol: TCP
+      nodePort: 30432
+  selector:
+    run: order-db
