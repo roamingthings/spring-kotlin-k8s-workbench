@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/default.html}">
 <head>
-    <title>The Order Service</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title th:text="#{index.page.title}">Order Service</title>
 </head>
 <body>
-<h1>Welcome to The Order Service</h1>
+<div layout:fragment="content">
+    <h1>Welcome to The Order Service</h1>
 
-<div>
-    <a href="/orders/list.html" th:href="@{/orders}">List of Orders</a>
+    <div>
+        <a href="/orders/list.html" th:href="@{/orders}"><i class="fa fa-list-ul"></i> List of Orders</a>
+    </div>
 </div>
 </body>
 </html>

@@ -1,17 +1,28 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/default.html}">
 <head>
-    <title>Order Details</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="#{orders.details.page.title}">Order Service</title>
 </head>
 <body>
-<!--/*@thymesVar id="order" type="de.roamingthings.orderservice.model.Order"*/-->
-<h1 th:if="${order.id != null}">Details of Order <span th:text="${order.name}">An Order</span></h1>
-<h1 th:unless="${order.id != null}">Details of new Order</h1>
-<form action="#" th:action="@{/orders}" th:object="${order}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label for="order-name">Name:</label> <input id="order-name" type="text" th:field="*{name}"/>
-    <div><input type="submit" value="Submit"/> <a href="/orders" th:href="@{/orders}">Back without change</a></div>
-</form>
+<div layout:fragment="content">
+    <!--/*@thymesVar id="order" type="de.roamingthings.orderservice.model.Order"*/-->
+    <h1 th:if="${order.id != null}">Details of Order <span th:text="${order.name}">An Order</span></h1>
+    <h1 th:unless="${order.id != null}">Details of new Order</h1>
+    <form action="#" th:action="@{/orders}" th:object="${order}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="form-group">
+            <label for="orderName">Name of the order:</label>
+            <input id="orderName" type="text" class="form-control" th:field="*{name}" aria-describedby="orderNameHelp" placeholder="Order name"/>
+            <small id="orderNameHelp" class="form-text text-muted">This is the name you want to give to the order.</small>
+        </div>
+        <div>
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+            <a href="/orders" th:href="@{/orders}"><i class="fa fa-ban"></i> Back without change</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

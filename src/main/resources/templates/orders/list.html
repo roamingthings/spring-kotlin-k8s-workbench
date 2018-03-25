@@ -1,31 +1,35 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/default.html}">
 <head>
-    <title>List Orders</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="#{orders.list.page.title}">Order Service</title>
 </head>
 <body>
-<h1>List of Orders from Order Service</h1>
+<div layout:fragment="content">
+    <h1>List of Orders from Order Service</h1>
 
-<!--/*@thymesVar id="orders" type="java.util.List<de.roamingthings.orderservice.model.Order>"*/-->
-<div th:unless="${orders.empty}">
-    <table>
-        <tr>
-            <th>Order Name</th>
-        </tr>
-        <!--/*@thymesVar id="order" type="de.roamingthings.orderservice.model.Order"*/-->
-        <tr th:each="order : ${orders}">
-            <td><a href="/orders/details.html" th:href="@{/orders/} + ${order.id}"><span th:text="${order.name}">Order Name</span></a>
-            </td>
-        </tr>
-    </table>
+    <!--/*@thymesVar id="orders" type="java.util.List<de.roamingthings.orderservice.model.Order>"*/-->
+    <div th:unless="${orders.empty}">
+        <table class="table">
+            <tr>
+                <th>Order Name</th>
+                <th></th>
+            </tr>
+            <!--/*@thymesVar id="order" type="de.roamingthings.orderservice.model.Order"*/-->
+            <tr th:each="order : ${orders}">
+                <td><a href="/orders/details.html" th:href="@{/orders/} + ${order.id}"><span th:text="${order.name}">Order Name</span></a></td>
+                <td><a href="/orders/details.html" th:href="@{/orders/} + ${order.id}"><i class="fa fa-edit"></i></td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${orders.empty}">
+        No orders stored at the moment
+    </div>
+
+    <a href="/orders/new" th:href="@{/orders/new}"><i class="fa fa-plus-circle"></i> Create New Order</a>
 </div>
-
-<div th:if="${orders.empty}">
-    No orders stored at the moment
-</div>
-
-<a href="/orders/new" th:href="@{/orders/new}">Create New Order</a>
-
 </body>
 </html>
