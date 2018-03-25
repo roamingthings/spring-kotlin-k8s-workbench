@@ -7,5 +7,4 @@ echo "Building"
 ./gradlew clean build buildImage
 
 echo "Deploying"
-kubectl delete -f Deployment.yml
-kubectl apply -f Deployment.yml
+kubectl set image deployment/kuberspring-app-deployment kuberspring-app=roamingthings/kuberspring:latest
