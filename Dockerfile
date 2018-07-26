@@ -8,4 +8,4 @@ ENV PG_PASSWORD=""
 VOLUME /tmp
 ARG JAR_FILE
 ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.datasource.password=${PG_PASSWORD}","-Dspring.profiles.active=${SPRING_PROFILE}","-jar","/app.jar"]
+ENTRYPOINT "java -Djava.security.egd=file:/dev/./urandom -Dspring.datasource.password=${PG_PASSWORD} -Dspring.profiles.active=${SPRING_PROFILE} -jar /app.jar"
